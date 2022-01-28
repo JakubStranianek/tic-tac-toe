@@ -6,6 +6,7 @@
 
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
   <link rel="stylesheet" href="styles/style.css">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> 
   
   <title>Frontend Mentor | Tic Tac Toe</title>
 </head>
@@ -28,12 +29,14 @@
         </div>
 
         <div class="gameChoose">
-          <button class="yellow">New Game (vs CPU)</button>
-          <button class="blue">New Game (vs player)</button>
+          <button class="yellow" onmousedown="checkFocus();">New Game (vs CPU)</button>
+          <button class="blue" onmousedown="checkFocus();">New Game (vs player)</button>
         </div>
      </div>
   </div>
- 
 
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
