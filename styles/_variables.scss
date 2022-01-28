@@ -1,0 +1,47 @@
+$DarkNavy: #1A2A33;
+$SemiDarkNavy: #1F3641;
+$Silver: #A8BFC9;
+$SilverHover: #DBE8ED;
+$LightBlue: #31C3BD;
+$LightBlueHover: #65E9E4;
+$LightYellow: #F2B137;
+$LightYellowHover: #FFC860;
+
+@mixin fontFamily() {
+    font-family: 'Outfit', sans-serif;
+}
+
+@mixin headingLarge() {
+    @include fontFamily();
+    font-size: 40px;
+    letter-spacing: 2.5px;
+    font-weight: bold;
+}
+
+@mixin headingMedium() {
+    @include fontFamily();
+    font-size: 24px;
+    letter-spacing: 1.5px;
+    font-weight: bold;
+}
+
+@mixin headingSmall() {
+    @include fontFamily();
+    font-size: 20px;
+    letter-spacing: 1.25px;
+    font-weight: bold;
+}
+
+@mixin headingExtraSmall() {
+    @include fontFamily();
+    font-size: 16px;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+@mixin bodyText() {
+    @include fontFamily();
+    font-size: 14px;
+    letter-spacing: 0.88px;
+    font-weight: medium;
+}
