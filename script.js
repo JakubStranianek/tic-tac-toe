@@ -4,7 +4,8 @@ var button2 = $(".buttonsWrapper > button:nth-child(2)");
 
 function checkFocus() {
     if (button1.is(":focus") || button2.is(":focus")) {
-        $(".box").hide();
+        $(".newGame").hide();
+        $(".gameStart").show();
     } else {
         alert("PICK PLAYER 1'S MARK");
     }
