@@ -354,6 +354,12 @@ body {
   background-color: #F2B137;
 }
 
+@media only screen and (max-height: 1000px) {
+  .newGameStart .gameStart {
+    height: 70%;
+  }
+}
+
 @media only screen and (max-width: 1700px) {
   .newGameStart .gameStart {
     width: 30%;
