@@ -2,6 +2,9 @@ var button1 = $(".buttonsWrapper > button:nth-child(1)");
 var button2 = $(".buttonsWrapper > button:nth-child(2)");
 var policka = $(".grid-item");
 var pocitadlo = 0;
+let pocetBodovX = 0;
+let pocetBodovO = 0;
+let pocetBodovRemiza = 0;
 
 // zmeni sa hracia plocha
 
@@ -153,27 +156,34 @@ function skontrolujVysledok(pocitadlo) {
         if (checkCombinations(0, 1, 2) == "x" || checkCombinations(3, 4, 5) == "x" || checkCombinations(6, 7, 8) == "x"
             || checkCombinations(1, 4, 7) == "x" || checkCombinations(2, 5, 8) == "x" || checkCombinations(0, 4, 8) == "x" ||
             checkCombinations(2, 4, 6) == "x" || checkCombinations(0, 3, 6) == "x") {
-            alert("Vyhral X!");
+                $(".popup .wrapper p").text("YOU WON!");
+                changePopupX();
             return true;
         } else if (checkCombinations(0, 1, 2) == "o" || checkCombinations(3, 4, 5) == "o" || checkCombinations(6, 7, 8) == "o"
             || checkCombinations(1, 4, 7) == "o" || checkCombinations(2, 5, 8) == "o" || checkCombinations(0, 4, 8) == "o" ||
             checkCombinations(2, 4, 6) == "o" || checkCombinations(0, 3, 6) == "o") {
-            alert("Vyhral o!");
+            //defaultne vyhral O cize x prehral
+            $(".popup .wrapper p").text("OH NO, YOU LOST...");
+            changePopupO();
             return true;
         } else {
-            alert("Remiza!");
+            $(".popup .wrapper p").text("");
+            changePopupTied();
             return true;
         }
     } else {
         if (checkCombinations(0, 1, 2) == "x" || checkCombinations(3, 4, 5) == "x" || checkCombinations(6, 7, 8) == "x"
             || checkCombinations(1, 4, 7) == "x" || checkCombinations(2, 5, 8) == "x" || checkCombinations(0, 4, 8) == "x" ||
             checkCombinations(2, 4, 6) == "x" || checkCombinations(0, 3, 6) == "x") {
-            alert("Vyhral X!");
+                $(".popup .wrapper p").text("YOU WON!");
+                changePopupX();
             return true;
         } else if (checkCombinations(0, 1, 2) == "o" || checkCombinations(3, 4, 5) == "o" || checkCombinations(6, 7, 8) == "o"
             || checkCombinations(1, 4, 7) == "o" || checkCombinations(2, 5, 8) == "o" || checkCombinations(0, 4, 8) == "o" ||
             checkCombinations(2, 4, 6) == "o" || checkCombinations(0, 3, 6) == "o") {
-            alert("Vyhral o!");
+            //defaultne vyhral O cize x prehral
+            $(".popup .wrapper p").text("OH NO, YOU LOST...");
+            changePopupO();
             return true;
         } else {
 
@@ -197,4 +207,63 @@ function getRandomNumber(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min);
+}
+
+function changePopupX() {
+    $(".popup .flexRow h1").css("color", "#31C3BD").text("TAKES THE ROUND");
+    $(".popup .flexRow img").attr("src", "assets/icon-x.svg").show();
+    checkScore();
+    $(".newGameStart .gameStart .grid-item1 h3").text(pocetBodovX); 
+    $(".popup").css("display", "flex");
+}
+
+function changePopupO() {
+    $(".popup .flexRow h1").css("color", "#F2B137").text("TAKES THE ROUND");
+    $(".popup .flexRow img").attr("src", "assets/icon-o.svg").show();
+    checkScore();
+    $(".newGameStart .gameStart .grid-item1 h3").text(pocetBodovO);
+    $(".popup").css("display", "flex");
+}
+
+function changePopupTied() {
+    $(".popup .flexRow h1").css("color", "#A8BFC9").text("TIED GAME");;
+    $(".popup .flexRow img").hide();
+    checkScore();
+    $(".newGameStart .gameStart .grid-item1 h3").text(pocetBodovRemiza); 
+    $(".popup").css("display", "flex");
+}
+
+function quit(){
+    $(".popup").hide();
+    $(".gameStart").hide();
+    $(".newGame").show();
+    pocetBodovX = 0;
+    pocetBodovO = 0;
+    pocetBodovRemiza = 0;
+    $(".newGameStart .gameStart .grid-item1 h3").text(pocetBodovX);
+    $(".newGameStart .gameStart .grid-item1 h3").text(pocetBodovO);
+    $(".newGameStart .gameStart .grid-item1 h3").text(pocetBodovRemiza);   
+    cleanGame();
+}
+
+function nextRound(){
+    $(".popup").hide();
+    cleanGame();
+}
+
+function cleanGame() {
+    var obrazky = $(".grid-item").find("img");
+    pocitadlo = 0;
+    obrazky.remove();
+}
+
+function checkScore() {
+    let winImage = $(".popup .flexRow img");
+    if (winImage.attr("src") == "assets/icon-o.svg") {
+        pocetBodovO++;
+    } else if (winImage.attr("src") == "assets/icon-x.svg") {
+        pocetBodovX++;
+    } else {
+        pocetBodovRemiza++;
+    }
 }

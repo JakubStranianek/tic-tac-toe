@@ -1,0 +1,78 @@
+@import "./_variables.scss";
+
+.popup {
+    width: 100%;
+    height: 100%;
+    display: none;
+    position: absolute;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.4);
+    
+    .wrapper {
+        width: 100%;
+        height: 40%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: $SemiDarkNavy;
+    
+        p {
+            @include headingExtraSmall();
+            color: $Silver;
+            margin-top: 0;
+        }
+    }
+
+    .flexRow {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+
+        img {
+            width: 64px;
+            height: 64px;
+        }
+
+        h1 {
+            color: $LightYellow;
+            @include headingLarge();
+            margin: 0;  
+            margin-left: 20px;
+          
+        }
+    }
+
+
+    .flexRow:nth-child(3) {
+        
+        margin-top: 20px;
+
+        button {
+            border: none;
+            @include headingExtraSmall();
+            border-radius: 10px;
+        }
+
+        button:nth-child(1) {
+            width: 76px;
+            height: 52px;
+            background-color: $Silver;
+            color: $DarkNavy;
+            box-shadow: 0px 5px 1px #6B8997;
+        }
+
+        button:nth-child(2) {
+            width: 146px;
+            height: 52px;
+            background-color: $LightYellow;
+            color: $DarkNavy;
+            box-shadow: 0px 5px 1px #CC8B13;
+            margin-left: 15px;
+        }
+
+    }
+}
