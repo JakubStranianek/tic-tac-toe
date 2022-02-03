@@ -6,6 +6,7 @@ let pocetBodovX = 0;
 let pocetBodovO = 0;
 let pocetBodovRemiza = 0;
 let restartButton = $(".newGameStart .gameStart button");
+let whoTurn = $("#whoGo");
 
 // zmeni sa hracia plocha
 
@@ -23,7 +24,7 @@ function checkFocus() {
 
 //na kliknutie buttonu sa zmeni meno hracov
 $(".blue, .yellow").on("mousedown", function () {
-    $("#whoGo").attr("src", "assets/icon-x-outline.svg");
+    whoTurn.attr("src", "assets/icon-x-outline.svg");
     if (button1.is(":focus") && $(this).hasClass("yellow")) {
         $("p")[1].textContent = "X (YOU)";
         $("p")[3].textContent = "O (CPU)";
@@ -95,22 +96,22 @@ function zahrajTah(objekt) {
 }
 
 function predTah(objekt) {
-    if ($("#whoGo").attr("src") == "assets/icon-x-outline.svg") {
+    if (whoTurn.attr("src") == "assets/icon-x-outline.svg") {
         if (objekt.find("img").length > 0) {
            // alert("Policko je obsadene");
             return false;
         } else {
             objekt.prepend('<img src="assets/icon-x.svg" id="x" alt="icon-x">');
-            $("#whoGo").attr("src", "assets/icon-o-outline.svg");
+            whoTurn.attr("src", "assets/icon-o-outline.svg");
             pocitadlo++;
         }
-    } else if ($("#whoGo").attr("src") == "assets/icon-o-outline.svg") {
+    } else if (whoTurn.attr("src") == "assets/icon-o-outline.svg") {
         if (objekt.find("img").length > 0) {
            // alert("Policko je obsadene");
             return false;
         } else {
             objekt.prepend('<img src="assets/icon-o.svg" id="o" alt="icon-o">');
-            $("#whoGo").attr("src", "assets/icon-x-outline.svg");
+            whoTurn.attr("src", "assets/icon-x-outline.svg");
             pocitadlo++;
         }
     }
@@ -130,10 +131,10 @@ function zahrajTahPC(znak) {
 
     if (znak == "o") {
         policka.eq(nahodneCislo).prepend('<img src="assets/icon-o.svg" id="o" alt="icon-o">');
-        $("#whoGo").attr("src", "assets/icon-x-outline.svg");
+        whoTurn.attr("src", "assets/icon-x-outline.svg");
     } else if (znak == "x") {
         policka.eq(nahodneCislo).prepend('<img src="assets/icon-x.svg" id="x" alt="icon-x">');
-        $("#whoGo").attr("src", "assets/icon-o-outline.svg");
+        whoTurn.attr("src", "assets/icon-o-outline.svg");
     }
     pocitadlo++;
 }
@@ -145,7 +146,7 @@ $(".grid-item").mouseenter(function () {
     if ($(this).find("img").length > 0) {
         //ak je policko obsadene tak nehoveruj
     } else {
-        if ($("#whoGo").attr("src") == "assets/icon-x-outline.svg") {
+        if (whoTurn.attr("src") == "assets/icon-x-outline.svg") {
             $(this).css('background-image', 'url(' + "assets/icon-x-outline-blue.svg" + ')').css('background-repeat', 'no-repeat').css('background-position', '50% 50%');
         } else {
             $(this).css('background-image', 'url(' + "assets/icon-o-outline-yellow.svg" + ')').css('background-repeat', 'no-repeat').css('background-position', '50% 50%');
@@ -274,7 +275,7 @@ function nextRound(){
         $(".newGameStart .gameStart .grid-item1 h3").text(pocetBodovRemiza); 
     }
     $(".popup").hide();
-    $("#whoGo").attr("src", "assets/icon-x-outline.svg");
+    whoTurn.attr("src", "assets/icon-x-outline.svg");
     cleanGame();
 }
 
