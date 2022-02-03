@@ -5,6 +5,7 @@ var pocitadlo = 0;
 let pocetBodovX = 0;
 let pocetBodovO = 0;
 let pocetBodovRemiza = 0;
+let restartButton = $(".newGameStart .gameStart button");
 
 // zmeni sa hracia plocha
 
@@ -22,6 +23,7 @@ function checkFocus() {
 
 //na kliknutie buttonu sa zmeni meno hracov
 $(".blue, .yellow").on("mousedown", function () {
+    $("#whoGo").attr("src", "assets/icon-x-outline.svg");
     if (button1.is(":focus") && $(this).hasClass("yellow")) {
         $("p")[1].textContent = "X (YOU)";
         $("p")[3].textContent = "O (CPU)";
@@ -61,38 +63,42 @@ $(".grid-item").on("click", function () {
 
 function novaHraTwo(objekt) {
     if (pocitadlo == 8) {
-        zahrajTah(objekt);
+        zahrajTahHrac(objekt);
     }
 
     if (pocitadlo < 8) {
-        zahrajTah(objekt);
-        zahrajTah(objekt);
+        zahrajTahHrac(objekt);
+        zahrajTahHrac(objekt);
     }
 
     skontrolujVysledok(pocitadlo);
 }
 
 function novaHraCpu(objekt) {
-    if (pocitadlo == 8) {
-        zahrajTah(objekt);
-    }
-
-    if (pocitadlo < 8) {
-        zahrajTah(objekt);
-        zahrajTahPC("o");
-    }
-
+    zahrajTah(objekt);
     skontrolujVysledok(pocitadlo);
 }
 
-function zahrajTah(objekt) {
+function zahrajTahHrac(objekt) {
     predTah(objekt);
+}
+
+function zahrajTah(objekt) {
+    if (predTah(objekt) == false) {
+        alert("Policko je obsadene");
+    } else if (pocitadlo < 8){
+        predTah(objekt);
+        zahrajTahPC("o");
+    } else if (pocitadlo == 8) {
+        predTah(objekt);
+    }
 }
 
 function predTah(objekt) {
     if ($("#whoGo").attr("src") == "assets/icon-x-outline.svg") {
         if (objekt.find("img").length > 0) {
-            //alert("Policko je obsadene");
+           // alert("Policko je obsadene");
+            return false;
         } else {
             objekt.prepend('<img src="assets/icon-x.svg" id="x" alt="icon-x">');
             $("#whoGo").attr("src", "assets/icon-o-outline.svg");
@@ -100,13 +106,15 @@ function predTah(objekt) {
         }
     } else if ($("#whoGo").attr("src") == "assets/icon-o-outline.svg") {
         if (objekt.find("img").length > 0) {
-            //alert("Policko je obsadene");
+           // alert("Policko je obsadene");
+            return false;
         } else {
             objekt.prepend('<img src="assets/icon-o.svg" id="o" alt="icon-o">');
             $("#whoGo").attr("src", "assets/icon-x-outline.svg");
             pocitadlo++;
         }
     }
+    return true;
 }
 
 function zahrajTahPC(znak) {
@@ -212,42 +220,61 @@ function getRandomNumber(min, max) {
 function changePopupX() {
     $(".popup .flexRow h1").css("color", "#31C3BD").text("TAKES THE ROUND");
     $(".popup .flexRow img").attr("src", "assets/icon-x.svg").show();
+    $(".popup .flexRow:nth-child(3) button:nth-child(1)").text("QUIT").css("width", "76px");
+    $(".popup .flexRow:nth-child(3) button:nth-child(2)").text("NEXT ROUND");
     checkScore();
-    $(".newGameStart .gameStart .grid-item1 h3").text(pocetBodovX); 
     $(".popup").css("display", "flex");
 }
 
 function changePopupO() {
     $(".popup .flexRow h1").css("color", "#F2B137").text("TAKES THE ROUND");
     $(".popup .flexRow img").attr("src", "assets/icon-o.svg").show();
+    $(".popup .flexRow:nth-child(3) button:nth-child(1)").text("QUIT").css("width", "76px");
+    $(".popup .flexRow:nth-child(3) button:nth-child(2)").text("NEXT ROUND");
     checkScore();
-    $(".newGameStart .gameStart .grid-item1 h3").text(pocetBodovO);
     $(".popup").css("display", "flex");
+
 }
 
 function changePopupTied() {
-    $(".popup .flexRow h1").css("color", "#A8BFC9").text("TIED GAME");;
-    $(".popup .flexRow img").hide();
+    $(".popup .flexRow h1").css("color", "#A8BFC9").text("TIED GAME");
+    $(".popup .flexRow img").attr("src", "").hide();
+    $(".popup .flexRow img").css("display", "none");
+    $(".popup .flexRow:nth-child(3) button:nth-child(1)").text("QUIT").css("width", "76px");
+    $(".popup .flexRow:nth-child(3) button:nth-child(2)").text("NEXT ROUND");
     checkScore();
-    $(".newGameStart .gameStart .grid-item1 h3").text(pocetBodovRemiza); 
     $(".popup").css("display", "flex");
 }
 
 function quit(){
-    $(".popup").hide();
-    $(".gameStart").hide();
-    $(".newGame").show();
-    pocetBodovX = 0;
-    pocetBodovO = 0;
-    pocetBodovRemiza = 0;
-    $(".newGameStart .gameStart .grid-item1 h3").text(pocetBodovX);
-    $(".newGameStart .gameStart .grid-item1 h3").text(pocetBodovO);
-    $(".newGameStart .gameStart .grid-item1 h3").text(pocetBodovRemiza);   
-    cleanGame();
+    if ($(".popup .flexRow:nth-child(3) button:nth-child(1)").text() == "NO, CANCEL") {
+        $(".popup").hide();
+    } else {
+        $(".popup").hide();
+        $(".gameStart").hide();
+        $(".newGame").show();
+        pocetBodovX = 0;
+        pocetBodovO = 0;
+        pocetBodovRemiza = 0;
+        $(".newGameStart .gameStart .grid-item1 h3").text(pocetBodovX);
+        $(".newGameStart .gameStart .grid-item1 h3").text(pocetBodovO);
+        $(".newGameStart .gameStart .grid-item1 h3").text(pocetBodovRemiza);   
+        cleanGame();
+    }
+    
 }
 
 function nextRound(){
+    if ($(".popup .flexRow:nth-child(3) button:nth-child(2)").text() == "YES, RESTART") {
+        pocetBodovX = 0;
+        pocetBodovO = 0;
+        pocetBodovRemiza = 0;
+        $(".newGameStart .gameStart .grid-item1 h3").text(pocetBodovX);
+        $(".newGameStart .gameStart .grid-item1 h3").text(pocetBodovO);
+        $(".newGameStart .gameStart .grid-item1 h3").text(pocetBodovRemiza); 
+    }
     $(".popup").hide();
+    $("#whoGo").attr("src", "assets/icon-x-outline.svg");
     cleanGame();
 }
 
@@ -261,9 +288,22 @@ function checkScore() {
     let winImage = $(".popup .flexRow img");
     if (winImage.attr("src") == "assets/icon-o.svg") {
         pocetBodovO++;
+        $(".newGameStart .gameStart .grid-item1.gridYellow h3").text(pocetBodovO); 
     } else if (winImage.attr("src") == "assets/icon-x.svg") {
         pocetBodovX++;
+        $(".newGameStart .gameStart .grid-item1.gridBlue h3").text(pocetBodovX); 
     } else {
         pocetBodovRemiza++;
+        $(".newGameStart .gameStart .grid-item1.gridSilver h3").text(pocetBodovRemiza); 
     }
 }
+
+restartButton.on("click", function() {
+    $(".popup .wrapper p").text("");
+    $(".popup .flexRow h1").css("color", "#A8BFC9").text("RESTART GAME?");
+    $(".popup .flexRow img").attr("src", "").hide();
+    $(".popup .flexRow img").css("display", "none");
+    $(".popup .flexRow:nth-child(3) button:nth-child(1)").text("NO, CANCEL").css("width", "139px");
+    $(".popup .flexRow:nth-child(3) button:nth-child(2)").text("YES, RESTART");
+    $(".popup").css("display", "flex");
+})
